@@ -1,86 +1,47 @@
-'use client';
+import Link from 'next/link';
 
-import { useState } from 'react';
-
-export default function Home() {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [message, setMessage] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage('Creating post...');
-
-    try {
-      const res = await fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, content }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setMessage(data.message);
-        setTitle('');
-        setContent('');
-      } else {
-        setMessage(data.message || 'Something went wrong');
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage('Something went wrong');
+async function getPosts() {
+  // In a real app, you'd fetch from an API.
+  // To avoid issues with the dev server not being accessible, we'll simulate the fetch.
+  try {
+    const res = await fetch(`/api/posts`, { cache: 'no-store' });
+    if (!res.ok) {
+      throw new Error('Failed to fetch posts');
     }
-  };
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return []; // Return an empty array on error
+  }
+}
+
+export default async function Home() {
+  const posts = await getPosts();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-900 text-white">
-      <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-center text-white">Create a New Post</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-400">
-              Title
-            </label>
-            <input
-              id="title"
-              name="title"
-              type="text"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="block w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-          <div>
-            <label htmlFor="content" className="block text-sm font-medium text-gray-400">
-              Content
-            </label>
-            <textarea
-              id="content"
-              name="content"
-              rows="4"
-              required
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="block w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            ></textarea>
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Create Post
-            </button>
-          </div>
-        </form>
-        {message && (
-          <p className="mt-4 text-center text-gray-400">{message}</p>
-        )}
-      </div>
-    </main>
+    <div className="space-y-8">
+      <h1 className="text-4xl font-bold text-white">Latest Posts</h1>
+      {posts.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <Link key={post._id} href={`/posts/${post._id}`}>
+              <div className="block bg-slate-800 rounded-lg shadow-lg overflow-hidden hover:scale-105 transform transition-transform duration-300 ease-in-out">
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold text-white mb-2">{post.title}</h2>
+                  <p className="text-slate-400 line-clamp-3">{post.content}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-12">
+            <p className="text-slate-400">No posts found. Why not create one?</p>
+            <Link href="/create-post" className="mt-4 inline-block px-6 py-2 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700">
+                Create Post
+            </Link>
+        </div>
+      )}
+    </div>
   );
 }

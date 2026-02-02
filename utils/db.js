@@ -10,7 +10,7 @@ async function connectDB() {
         return cached.conn;
     }
     if(!cached.promise) {
-        cached.promise = mongoose.connect(process.env.MONGOURL).then((mongoose) => {
+        cached.promise = mongoose.connect(process.env.MONGOURI).then((mongoose) => {
             return mongoose
         })
     }
