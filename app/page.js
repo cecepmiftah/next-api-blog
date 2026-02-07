@@ -1,12 +1,12 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 async function getPosts() {
   // In a real app, you'd fetch from an API.
   // To avoid issues with the dev server not being accessible, we'll simulate the fetch.
   try {
-    const res = await fetch(`/api/posts`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`);
     if (!res.ok) {
-      throw new Error('Failed to fetch posts');
+      throw new Error("Failed to fetch posts");
     }
     return res.json();
   } catch (error) {
@@ -27,7 +27,9 @@ export default async function Home() {
             <Link key={post._id} href={`/posts/${post._id}`}>
               <div className="block bg-slate-800 rounded-lg shadow-lg overflow-hidden hover:scale-105 transform transition-transform duration-300 ease-in-out">
                 <div className="p-6">
-                  <h2 className="text-2xl font-bold text-white mb-2">{post.title}</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2">
+                    {post.title}
+                  </h2>
                   <p className="text-slate-400 line-clamp-3">{post.content}</p>
                 </div>
               </div>
@@ -36,10 +38,13 @@ export default async function Home() {
         </div>
       ) : (
         <div className="text-center py-12">
-            <p className="text-slate-400">No posts found. Why not create one?</p>
-            <Link href="/create-post" className="mt-4 inline-block px-6 py-2 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700">
-                Create Post
-            </Link>
+          <p className="text-slate-400">No posts found. Why not create one?</p>
+          <Link
+            href="/create-post"
+            className="mt-4 inline-block px-6 py-2 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700"
+          >
+            Create Post
+          </Link>
         </div>
       )}
     </div>
