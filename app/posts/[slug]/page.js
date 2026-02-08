@@ -8,11 +8,11 @@ import PostHeader from "@/components/posts/single/PostHeader";
 import PostContent from "@/components/posts/single/PostContent";
 import PostSidebar from "@/components/posts/single/PostSidebar";
 import PostActions from "@/components/posts/single/PostActions";
-import PostComments from "@/components/posts/single/PostComments";
 import PostRelated from "@/components/posts/single/PostRelated";
 import PostLoading from "@/components/posts/single/PostLoading";
 import PostError from "@/components/posts/single/PostError";
 import { fetchPostBySlug } from "@/lib/posts-api";
+import CommentsContainer from "@/components/comments/CommentsContainer";
 
 // Dynamically import editor untuk read-only mode
 const EditorReadOnly = dynamic(() => import("@/components/EditorReadOnly"), {
@@ -308,7 +308,7 @@ export default function SinglePostPage() {
             />
 
             {/* Comments */}
-            {showComments && <PostComments postId={post._id} />}
+            {showComments && <CommentsContainer postId={post._id} />}
           </div>
 
           {/* Sidebar */}

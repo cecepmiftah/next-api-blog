@@ -1,7 +1,7 @@
 // app/api/posts/check-slug/route.js
 import { NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
 import Post from "@/models/Post";
+import connectDB from "@/lib/mongoose";
 
 export async function GET(request) {
   try {
