@@ -93,13 +93,13 @@ export default function PostsPage() {
   };
 
   // Handle post deletion
-  const handleDeletePost = async (postId) => {
+  const handleDeletePost = async (postId, slug) => {
     if (!window.confirm("Are you sure you want to delete this post?")) {
       return;
     }
 
     try {
-      const response = await fetch(`/api/posts/${postId}`, {
+      const response = await fetch(`/api/posts/${slug}/${postId}`, {
         method: "DELETE",
         credentials: "include",
       });

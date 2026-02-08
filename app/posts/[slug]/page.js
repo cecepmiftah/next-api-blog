@@ -217,7 +217,7 @@ export default function SinglePostPage() {
     }
 
     try {
-      const response = await fetch(`/api/posts/${post._id}`, {
+      const response = await fetch(`/api/posts/${post.slug}/${post._id}`, {
         method: "DELETE",
         credentials: "include",
       });

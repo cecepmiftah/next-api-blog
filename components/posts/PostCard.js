@@ -127,7 +127,7 @@ const PostCard = ({
                           <button
                             onClick={() => {
                               setShowActions(false);
-                              onDelete(post._id);
+                              onDelete(post._id, post.slug);
                             }}
                             className="w-full flex items-center gap-3 px-4 py-3 text-left text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
                           >
