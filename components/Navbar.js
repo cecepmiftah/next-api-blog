@@ -102,7 +102,12 @@ const Navbar = () => {
   // Navigation links
   const navLinks = [
     { href: "/", label: "Home", icon: <FaHome /> },
-    { href: "/dashboard", label: "Dashboard", icon: <MdDashboard /> },
+    {
+      href: "/dashboard",
+      label: "Dashboard",
+      icon: <MdDashboard />,
+      requiresAuth: true,
+    },
     { href: "/posts", label: "Posts", icon: <FaFileAlt /> },
     {
       href: "/posts/create",

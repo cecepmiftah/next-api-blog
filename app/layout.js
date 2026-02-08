@@ -1,25 +1,29 @@
-import Header from "@/components/Header";
+import { Inter } from "next/font/google";
+import { AuthProvider } from "@/components/AuthProvider";
 import "./globals.css";
-import ToastProvider from "@/components/ToastProvider";
-import { SessionProvider } from "next-auth/react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Next.js Blog",
-  description: "A simple blog built with Next.js and MongoDB",
+  title: "EditorJS Blog Platform",
+  description: "Rich content platform with Editor.js and Next.js",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <SessionProvider>
-          <ToastProvider>
-            <div className="min-h-screen">
-              <Header />
-              <main className="container mx-auto px-6 py-8">{children}</main>
-            </div>
-          </ToastProvider>
-        </SessionProvider>
+    <html lang="en" className="dark">
+      <body
+        className={`${inter.className} bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 min-h-screen`}
+      >
+        <AuthProvider>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+
+          {/* Footer */}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

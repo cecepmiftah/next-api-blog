@@ -20,7 +20,7 @@ import {
 } from "react-icons/fa";
 import { MdDescription, MdTitle } from "react-icons/md";
 import { useSession } from "next-auth/react";
-import { useAutoSave } from "@/lib/useAutoSave";
+import { useAutoSave } from "@/hooks/useAutoSave";
 
 const EditorComponent = dynamic(() => import("@/components/EditorComponent"), {
   ssr: false,

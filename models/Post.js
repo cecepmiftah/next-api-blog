@@ -90,10 +90,13 @@ const PostSchema = new mongoose.Schema(
 );
 
 // Create index for better performance
-// PostSchema.index({ slug: 1 });
-// PostSchema.index({ status: 1, createdAt: -1 });
-// PostSchema.index({ authorId: 1 });
-// PostSchema.index({ tags: 1 });
+// Update Post model dengan indexes tambahan
+// PostSchema.index({ title: 'text', excerpt: 'text', 'content.blocks.text': 'text' });
+// PostSchema.index({ status: 1, category: 1, createdAt: -1 });
+// PostSchema.index({ authorId: 1, status: 1 });
+// PostSchema.index({ tags: 1, status: 1 });
+// PostSchema.index({ views: -1 });
+// PostSchema.index({ likes: -1 });
 
 // Middleware to update slug if title changes
 PostSchema.pre("save", function (next) {
