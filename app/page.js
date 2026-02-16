@@ -44,8 +44,10 @@ export default async function Home() {
   }
 
   // Ambil total users
-  const totalUsers = await User.estimatedDocumentCount();
-  const totalPosts = await Post.estimatedDocumentCount();
+  const totalUsers = 300;
+  const totalPosts = 1000;
+  // const totalUsers = await User.estimatedDocumentCount();
+  // const totalPosts = await Post.estimatedDocumentCount();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
