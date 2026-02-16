@@ -102,12 +102,12 @@ const Navbar = () => {
   // Navigation links
   const navLinks = [
     { href: "/", label: "Home", icon: <FaHome /> },
-    {
-      href: "/dashboard",
-      label: "Dashboard",
-      icon: <MdDashboard />,
-      requiresAuth: true,
-    },
+    // {
+    //   href: "/dashboard",
+    //   label: "Dashboard",
+    //   icon: <MdDashboard />,
+    //   requiresAuth: true,
+    // },
     { href: "/posts", label: "Posts", icon: <FaFileAlt /> },
     {
       href: "/posts/create",
@@ -121,8 +121,12 @@ const Navbar = () => {
 
   // User menu items
   const userMenuItems = [
-    { href: "/profile", label: "Profile", icon: <FaUser /> },
-    { href: "/settings", label: "Settings", icon: <FaCog /> },
+    {
+      href: `/profile/${session?.user?.id}`,
+      label: "Profile",
+      icon: <FaUser />,
+    },
+    // { href: "/settings", label: "Settings", icon: <FaCog /> },
     { type: "divider" },
     { action: handleSignOut, label: "Sign Out", icon: <FaSignOutAlt /> },
   ];
@@ -218,7 +222,7 @@ const Navbar = () => {
             {/* Right Section - Actions & User */}
             <div className="flex items-center space-x-3">
               {/* Search Bar (Desktop) */}
-              <div className="hidden md:flex items-center relative">
+              {/* <div className="hidden md:flex items-center relative">
                 <div className="relative">
                   <input
                     type="text"
@@ -227,10 +231,10 @@ const Navbar = () => {
                   />
                   <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
                 </div>
-              </div>
+              </div> */}
 
               {/* Theme Toggle */}
-              <button
+              {/* <button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
                 aria-label={
@@ -238,7 +242,7 @@ const Navbar = () => {
                 }
               >
                 {isDarkMode ? <FaSun size={18} /> : <FaMoon size={18} />}
-              </button>
+              </button> */}
 
               {/* Create Post Button (Mobile) */}
               {session && (
@@ -424,12 +428,12 @@ const Navbar = () => {
                   >
                     Sign In
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/register"
                     className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90 text-white rounded-xl font-medium transition-opacity"
                   >
                     Sign Up
-                  </Link>
+                  </Link> */}
                 </div>
               )}
             </div>
@@ -440,7 +444,7 @@ const Navbar = () => {
         <div className={`lg:hidden ${isMenuOpen ? "block" : "hidden"}`}>
           <div className="px-4 pt-2 pb-4 space-y-2 bg-slate-900/95 backdrop-blur-lg border-t border-slate-700/50">
             {/* Mobile Search */}
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <div className="relative">
                 <input
                   type="text"
@@ -449,7 +453,7 @@ const Navbar = () => {
                 />
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
               </div>
-            </div>
+            </div> */}
 
             {/* Mobile Navigation Links */}
             <div className="space-y-1">
@@ -512,13 +516,13 @@ const Navbar = () => {
                     <FaUser />
                     <span>Profile</span>
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/settings"
                     className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl"
                   >
                     <FaCog />
                     <span>Settings</span>
-                  </Link>
+                  </Link> */}
                   <button
                     onClick={handleSignOut}
                     className="w-full flex items-center gap-3 px-4 py-3 text-left text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl"

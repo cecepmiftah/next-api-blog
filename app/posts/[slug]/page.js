@@ -15,17 +15,17 @@ import { fetchPostBySlug } from "@/lib/posts-api";
 import CommentsContainer from "@/components/comments/CommentsContainer";
 
 // Dynamically import editor untuk read-only mode
-const EditorReadOnly = dynamic(() => import("@/components/EditorReadOnly"), {
-  ssr: false,
-  loading: () => (
-    <div className="min-h-[200px] bg-slate-900 rounded-xl border border-slate-700 animate-pulse flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-8 h-8 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin mx-auto mb-2"></div>
-        <p className="text-slate-400 text-sm">Loading content...</p>
-      </div>
-    </div>
-  ),
-});
+// const EditorReadOnly = dynamic(() => import("@/components/EditorReadOnly"), {
+//   ssr: false,
+//   loading: () => (
+//     <div className="min-h-[200px] bg-slate-900 rounded-xl border border-slate-700 animate-pulse flex items-center justify-center">
+//       <div className="text-center">
+//         <div className="w-8 h-8 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin mx-auto mb-2"></div>
+//         <p className="text-slate-400 text-sm">Loading content...</p>
+//       </div>
+//     </div>
+//   ),
+// });
 
 export default function SinglePostPage() {
   const { slug } = useParams();

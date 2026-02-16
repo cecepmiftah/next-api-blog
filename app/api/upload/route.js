@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { uploadToCloudinary } from "@/lib/cloudinary";
+import { uploadProfileImage, uploadToCloudinary } from "@/lib/cloudinary";
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
@@ -8,6 +8,7 @@ export async function POST(request) {
 
     const formData = await request.formData();
     const file = formData.get("file");
+    const uploadType = formData.get("type") || "general"; // 'general' atau 'profile'
 
     if (!file) {
       return NextResponse.json(
@@ -27,37 +28,57 @@ export async function POST(request) {
       );
     }
 
-    // Check file type
-    const allowedTypes = [
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "image/gif",
-      "image/webp",
-      "image/svg+xml",
-      "application/pdf",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "application/vnd.ms-excel",
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "application/vnd.ms-powerpoint",
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      "application/zip",
-      "text/plain",
-    ];
+    // Check file type based on upload type
+    const allowedTypes = {
+      general: [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/svg+xml",
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/vnd.ms-powerpoint",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "application/zip",
+        "text/plain",
+      ],
+      profile: [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ],
+    };
 
-    if (!allowedTypes.includes(file.type)) {
+    const currentAllowedTypes =
+      allowedTypes[uploadType] || allowedTypes.general;
+
+    if (!currentAllowedTypes.includes(file.type)) {
       return NextResponse.json(
         {
           success: false,
-          error: "File type not allowed",
+          error:
+            uploadType === "profile"
+              ? "Only JPG, PNG, GIF, and WebP images are allowed for profile pictures"
+              : "File type not allowed",
         },
         { status: 400 },
       );
     }
 
-    // Upload to Cloudinary
-    const result = await uploadToCloudinary(file);
+    // Upload to Cloudinary based on type
+    let result;
+    if (uploadType === "profile") {
+      result = await uploadProfileImage(file);
+    } else {
+      result = await uploadToCloudinary(file);
+    }
 
     if (result.success && result.data) {
       return NextResponse.json({

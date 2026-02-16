@@ -184,7 +184,9 @@ const PostCard = ({
               <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                 <div className="flex items-center gap-2">
                   <FaUser className="text-blue-400" />
-                  <span>{post.authorName}</span>
+                  <Link href={`/profile/${post.authorId}`}>
+                    <span>{post.authorName}</span>
+                  </Link>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -322,7 +324,9 @@ const PostCard = ({
             {post.authorName?.charAt(0) || "A"}
           </div>
           <div className="text-sm">
-            <p className="text-white">{post.authorName}</p>
+            <Link href={`/profile/${post.authorId}`}>
+              <p className="text-white">{post.authorName}</p>
+            </Link>
             <p className="text-slate-500 text-xs">Author</p>
           </div>
         </div>

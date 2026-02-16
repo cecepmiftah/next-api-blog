@@ -1,27 +1,30 @@
 import { auth } from "@/auth";
 import SignOutBtn from "@/components/SignOutBtn";
-// import UserLikedPosts from "@/components/posts/UserLikedPosts";
-import { redirect } from "next/navigation";
 import { MdEmail, MdAccountCircle, MdEdit } from "react-icons/md";
 import { FaUserFriends, FaHeart } from "react-icons/fa";
+import Link from "next/link";
 import UserPosts from "@/components/posts/UserPost";
-import connectDB from "@/lib/mongoose";
 import User from "@/models/User";
+import connectDB from "@/lib/mongoose";
 
 export default async function Profile({ params, searchParams }) {
   const session = await auth();
+  const { id } = await params;
 
-  if (!session) {
-    redirect("/api/auth/signin");
-  }
+  // if (!session) {
+  //   redirect("/api/auth/signin");
+  // }
 
   await connectDB();
 
   // Ambil data user saat ini
-  const currentUser = await User.findOne({ email: session.user.email });
+  let currentUser;
+  if (session) {
+    currentUser = await User.findOne({ email: session.user.email });
+  }
 
   // Ambil userId dari URL jika melihat profile orang lain
-  const userId = currentUser?._id?.toString();
+  const userId = id || currentUser?._id?.toString();
 
   // Cek apakah user melihat profile sendiri atau orang lain
   const isOwnProfile = userId === currentUser?._id?.toString();
@@ -119,7 +122,7 @@ export default async function Profile({ params, searchParams }) {
                           </div>
                         </div>
                       </div>
-                      {/* <div className="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                      <div className="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
                         <div className="flex items-center justify-center gap-2">
                           <FaHeart className="text-red-400" />
                           <div>
@@ -129,16 +132,19 @@ export default async function Profile({ params, searchParams }) {
                             <p className="text-xs text-slate-400">Likes</p>
                           </div>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
 
                     {/* Edit Profile Button (only for own profile) */}
                     {isOwnProfile && (
                       <div className="space-y-4">
-                        <button className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300">
+                        <Link
+                          href="/profile/edit"
+                          className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300"
+                        >
                           <MdEdit />
                           Edit Profile
-                        </button>
+                        </Link>
                         <SignOutBtn />
                       </div>
                     )}

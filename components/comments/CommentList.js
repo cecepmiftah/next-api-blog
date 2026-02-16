@@ -10,7 +10,6 @@ const CommentList = ({
   // Organize comments into threads (parent + replies)
   const parentComments = comments.filter((comment) => !comment.parentId);
   const replies = comments.filter((comment) => comment.parentId);
-  console.log("CommentList replies:", replies);
 
   // Group replies by parent
   const repliesByParent = replies.reduce((acc, reply) => {

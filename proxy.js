@@ -4,8 +4,9 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const isProtectedRoute =
     req.nextUrl.pathname.startsWith("/dashboard") ||
-    req.nextUrl.pathname.startsWith("/profile") ||
+    // req.nextUrl.pathname.startsWith("/profile") ||
     req.nextUrl.pathname.startsWith("/posts/create") ||
+    req.nextUrl.pathname.startsWith("/profile/edit") ||
     req.nextUrl.pathname.startsWith("/posts/update");
 
   if (isProtectedRoute && !isLoggedIn) {

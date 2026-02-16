@@ -5,7 +5,6 @@ import connectDB from "@/lib/mongoose";
 
 // GET single post by ID atau slug
 export async function GET(request, { params }) {
-  console.log("HIT GET /api/posts/[id]");
   try {
     await connectDB();
 
