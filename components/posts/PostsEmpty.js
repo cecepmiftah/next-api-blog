@@ -44,7 +44,7 @@ const PostsEmpty = ({ filters }) => {
         </button>
 
         <Link
-          href="/create-post"
+          href="/posts/create"
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90 text-white rounded-xl font-medium"
         >
           <FaPlus />

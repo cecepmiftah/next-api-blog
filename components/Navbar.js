@@ -25,7 +25,6 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const { data: session, status } = useSession();
@@ -65,12 +64,6 @@ const Navbar = () => {
         !event.target.closest(".user-avatar")
       ) {
         setShowUserMenu(false);
-      }
-      if (
-        !event.target.closest(".notifications-menu") &&
-        !event.target.closest(".notification-bell")
-      ) {
-        setShowNotifications(false);
       }
     };
 
@@ -182,11 +175,11 @@ const Navbar = () => {
               <Link href="/" className="ml-2 lg:ml-0">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">E</span>
+                    <span className="text-white font-bold text-lg">aW</span>
                   </div>
                   <div className="hidden md:block">
                     <h1 className="text-md font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                      EditorJS Blog
+                      anyWriting
                     </h1>
                   </div>
                 </div>
@@ -255,70 +248,6 @@ const Navbar = () => {
                 </Link>
               )}
 
-              {/* Notifications */}
-              <div className="relative notification-bell">
-                <button
-                  onClick={() => setShowNotifications(!showNotifications)}
-                  className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors relative"
-                  aria-label="Notifications"
-                >
-                  <FaBell size={18} />
-                  {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                      {unreadCount}
-                    </span>
-                  )}
-                </button>
-
-                {/* Notifications Dropdown */}
-                {showNotifications && (
-                  <div className="notifications-menu absolute right-0 mt-2 w-80 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl z-50 overflow-hidden">
-                    <div className="p-4 border-b border-slate-700">
-                      <h3 className="text-lg font-bold text-white">
-                        Notifications
-                      </h3>
-                      <p className="text-sm text-slate-400">
-                        {unreadCount} unread
-                      </p>
-                    </div>
-                    <div className="max-h-96 overflow-y-auto">
-                      {notifications.map((notification) => (
-                        <div
-                          key={notification.id}
-                          className={`p-4 border-b border-slate-700/50 hover:bg-slate-700/50 cursor-pointer ${
-                            notification.unread ? "bg-blue-500/5" : ""
-                          }`}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div
-                              className={`w-2 h-2 mt-2 rounded-full ${
-                                notification.unread
-                                  ? "bg-blue-500"
-                                  : "bg-slate-600"
-                              }`}
-                            />
-                            <div className="flex-1">
-                              <p className="text-white">{notification.text}</p>
-                              <p className="text-xs text-slate-400 mt-1">
-                                {notification.time}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-3 bg-slate-900/50 border-t border-slate-700">
-                      <Link
-                        href="/notifications"
-                        className="text-center block text-sm text-blue-400 hover:text-blue-300"
-                      >
-                        View all notifications
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </div>
-
               {/* User Profile */}
               {status === "loading" ? (
                 <div className="w-10 h-10 rounded-full bg-slate-700 animate-pulse" />
@@ -326,7 +255,7 @@ const Navbar = () => {
                 <div className="relative user-avatar">
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
-                    className="flex items-center gap-3 p-1 rounded-xl hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-3 p-1 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer"
                     aria-label="User menu"
                   >
                     {session.user?.image ? (
